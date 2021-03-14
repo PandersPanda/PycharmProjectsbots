@@ -121,6 +121,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
     client.connect((ipAdress, port))
+    client.send(botName.encode())
 except:
     print("Could not connect to the server, try again")
     exit()

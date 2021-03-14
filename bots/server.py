@@ -7,7 +7,7 @@ import random
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-if (len(sys.argv) == 2):
+if len(sys.argv) == 2:
     port = int(sys.argv[1])
     print(str(port))
 else:
@@ -21,6 +21,7 @@ except:
 
 sock.listen(20)
 botsConnected = []
+botNames = []
 antallBots = 0
 ThreadCount = 0
 Username = "Host"
@@ -31,7 +32,7 @@ activities = ["sing", "fight", "kill", "sleep", "chill", "run", "eat", "work", "
 
 def multi_threaded_client(connection):
     while True:
-        msg = input("\n" + Username + ": " + random.choice(lines) + ": ")
+        msg = input()
 
         if msg.lower() == "-help":
             print("\nHere are a few commands you can use:"
@@ -55,6 +56,11 @@ def multi_threaded_client(connection):
                 print(" " + act)
             continue
 
+        words = msg.split()
+        for word in words:
+            if word in activities:
+                msg = word
+
         for bot in botsConnected:
             try:
                 bot.send(msg.encode())
@@ -67,6 +73,8 @@ def multi_threaded_client(connection):
             except:
                 remove(bot)
                 print("\nBot has been disconnected, number of bots is now " + str(len(botsConnected)))
+
+        print("\n" + Username + ": " + random.choice(lines) + ": ")
 
     connection.close()
 
@@ -87,11 +95,15 @@ while True:
     except:
         break
 
+    botName = clientSocket.recv(2048).decode()
 
-    _thread.start_new_thread(multi_threaded_client, (clientSocket,))
-    print("\nBot:" + "with Address: " + str(addr) + " connected")
+    print("\nBot: " + botName + " with Address: " + str(addr) + " connected")
     print("Number of bots are: " + str(len(botsConnected)))
     print("For more information type -help in the input")
+    print("\n" + Username + ": " + random.choice(lines) + ": ")
+
+    _thread.start_new_thread(multi_threaded_client, (clientSocket,))
+
 
 print("Closing server!")
 sock.close()
