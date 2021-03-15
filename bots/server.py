@@ -3,6 +3,7 @@ import os
 import _thread
 import sys
 import random
+import time
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -56,6 +57,30 @@ def multi_threaded_client(connection):
                 print(" " + act)
             continue
 
+        if "kick" in msg.lower():
+            parsed = msg.split()
+
+            if len(parsed) == 2:
+                botKicked = parsed[1]
+            else:
+                print("The format of the kick-command is kick BOTNAME")
+                print("\n" + Username + ": " + random.choice(lines) + ": ")
+                continue
+
+            if botKicked in botNames:
+                index = botNames.index(botKicked)
+                bot = botsConnected[index]
+                del botNames[index]
+                del botsConnected[index]
+                bot.close()
+
+                print("Bot: " + botKicked + " kicked")
+                print("\n" + Username + ": " + random.choice(lines) + ": ")
+                continue
+            else:
+                print("Bot: " + botKicked + " is not in the among the connected bots")
+                continue
+
         words = msg.split()
         for word in words:
             if word in activities:
@@ -69,6 +94,7 @@ def multi_threaded_client(connection):
 
             try:
                 data = bot.recv(2048)
+                time.sleep()
                 print("\n" + data.decode())
             except:
                 remove(bot)
@@ -96,6 +122,7 @@ while True:
         break
 
     botName = clientSocket.recv(2048).decode()
+    botNames.append(botName)
 
     print("\nBot: " + botName + " with Address: " + str(addr) + " connected")
     print("Number of bots are: " + str(len(botsConnected)))
@@ -103,7 +130,6 @@ while True:
     print("\n" + Username + ": " + random.choice(lines) + ": ")
 
     _thread.start_new_thread(multi_threaded_client, (clientSocket,))
-
 
 print("Closing server!")
 sock.close()
