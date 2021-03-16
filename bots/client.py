@@ -36,7 +36,10 @@ print(botName + " connected to the server \nawaiting message...")
 
 while connected:
 
-    msg = client.recv(2048)
+    try:
+        msg = client.recv(2048)
+    except:
+        break
 
     if msg.decode() == "disconnect123":
         connected = False
