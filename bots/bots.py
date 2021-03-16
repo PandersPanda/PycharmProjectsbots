@@ -2,7 +2,6 @@ import socket
 import sys
 import random
 import string
-from bots import *
 
 # bots
 
@@ -103,49 +102,3 @@ def mario(a=None):
         return responses[a]
 
     return "Let's a GO!"
-
-
-# Checkes the arguments
-if len(sys.argv) == 4:
-    botName = str(sys.argv[3])
-    ipAdress = str(sys.argv[1])
-    port = int(sys.argv[2])
-    print(botName)
-
-    if botName.lower() in botList:
-        bot = eval(botName.lower())
-    else:
-        print("Bot is not in the current botlist")
-        exit()
-else:
-    print("Not enough arguments")
-    exit()
-
-# Connecting
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-try:
-    client.connect((ipAdress, port))
-    client.send(botName.encode())
-except:
-    print("Could not connect to the server, try again")
-    exit()
-
-while True:
-    print("\nawaiting message...")
-    try:
-        msg = client.recv(2048)
-    except:
-        break
-
-    if msg.decode() == "Host":
-        msg = client.recv(2048)
-        print("\nMessage recieved: " + msg.decode() + "\n")
-        reply = botName + ": {}".format(bot(msg.decode()))
-        print("Sending " + reply + " to the server...")
-        client.send(reply.encode())
-    else:
-        print(msg.decode())
-
-print("Client has been disconnected from the server")
-client.close()
