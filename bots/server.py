@@ -22,7 +22,7 @@ except:
     exit()
 
 sock.listen(20)
-botsConnected = []
+botsConnected = []  # clients which are always bots
 botNames = []
 antallBots = 0
 ThreadCount = 0
@@ -70,15 +70,12 @@ def multi_threaded_client(connection):
                 print("\n" + Username + ": " + random.choice(lines) + ": ")
                 continue
 
-            if botKicked in botNames:
-                index = botNames.index(botKicked)
+            if botKicked.lower() in botNames:
+                index = botNames.index(botKicked.lower())
                 bot = botsConnected[index]
-                del botNames[index]
-                del botsConnected[index]
-                bot.close()
+                remove(bot)
 
                 print("Bot: " + botKicked + " kicked")
-                print("\n" + Username + ": " + random.choice(lines) + ": ")
                 continue
             else:
                 print("Bot: " + botKicked + " is not in the among the connected bots")
@@ -99,7 +96,7 @@ def multi_threaded_client(connection):
             try:
                 data = bot.recv(2048)
                 brodcast(bot, data)
-                time.sleep(1)
+                time.sleep(0.5)
                 print("\n" + data.decode())
             except:
                 remove(bot)
@@ -110,15 +107,16 @@ def multi_threaded_client(connection):
 
 def remove(connection):
     if connection in botsConnected:
+        connection.close()
+
         index = botsConnected.index(connection)
         del botNames[index]
         botsConnected.remove(connection)
 
 
-def brodcast(connection, msg):
+def brodcast(client, msg):
     for bot in botsConnected:
-        if bot != connection:
-            print("Sending")
+        if bot != client:
             bot.send(msg)
 
 
@@ -131,7 +129,7 @@ while True:
 
     # Getting the name from the client
     botName = clientSocket.recv(2048).decode()
-    botNames.append(botName)
+    botNames.append(botName.lower())
 
     print("\nBot: " + botName + " with Address: " + str(addr) + " connected")
     print("Number of bots are: " + str(len(botsConnected)))

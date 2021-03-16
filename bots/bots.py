@@ -10,7 +10,7 @@ botList = ["joker", "batman", "luffy", "gon", "mario"]
 actvities = ["chill", "play", "eat", "sleep", "run", "fight", "kill"]
 
 
-def joker(a, b=None):
+def joker(a=None):
     myDict = {
         "name": "Joker",
         "greet": "I am joker, batman's worst nightmare",
@@ -21,7 +21,8 @@ def joker(a, b=None):
         "chill": "I will not chill until I get my revenge",
         "eat": "Well sure! Can't the joker also enjoy a nice meal from time to time?",
         "fight": "No, but I can hire someone else to do it for me",
-        "joke": "Knock, knock. Who's there? It's the police m'am! Your son's been hit by a drunk driver. He's dead."
+        "joke": "Knock, knock. Who's there? It's the police m'am! Your son's been hit by a drunk driver. He's dead. "
+                "HAHAHA",
     }
     if a in myDict:
         return myDict[a]
@@ -29,16 +30,18 @@ def joker(a, b=None):
     return "There are other, more important things on my mind, hehehe"
 
 
-def batman(a, b=None):
+def batman(a=None):
     myDict = {
         "greet": "I am batman (In a very deep voice)",
+        "hello": "I am batman (In a very deep voice)",
         "run": "Yes, I need to be in shape",
         "sleep": "Sleeping is not a priority here",
         "kill": "I would never kill",
         "work": "I work day and night to keep the city safe",
         "eat": "Yes, but not batsoup, that is bad for you",
         "fight": "If its against evil, I will do it!",
-        "joke": "I don't know any, ask joker"
+        "joke": "I don't know any, ask joker",
+        "sing": "Nanananana nananana Batman!"
     }
 
     if a in myDict:
@@ -47,7 +50,7 @@ def batman(a, b=None):
     return "Maybe later, as a superhero I don't have much time on my hands"
 
 
-def luffy(a, b=None):
+def luffy(a=None):
     myDict = {
         "greet": "I am Luffy, and I am going to be the greatest pyBot king!",
         "run": "Boooooring!",
@@ -102,3 +105,9 @@ def mario(a=None):
         return responses[a]
 
     return "Let's a GO!"
+
+
+def link(a=None):
+    responses = ["Hayyya", "Yaaahaha", "AAAAhhhh", "Hiiiiya"]
+
+    return "{}".format(random.choice(responses))
