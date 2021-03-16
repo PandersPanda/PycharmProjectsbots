@@ -23,6 +23,7 @@ else:
 
 # Connecting
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+connected = True
 
 try:
     client.connect((ipAdress, port))
@@ -33,12 +34,12 @@ except:
 
 print(botName + " connected to the server \nawaiting message...")
 
-while True:
+while connected:
 
-    try:
-        msg = client.recv(2048)
-    except:
-        break
+    msg = client.recv(2048)
+
+    if msg.decode() == "disconnect123":
+        connected = False
 
     if msg.decode() == "Host":
         msg = client.recv(2048)
@@ -48,6 +49,14 @@ while True:
         client.send(reply.encode())
     else:
         print("\n" + msg.decode())
+        sender = msg.decode().split(":")[0]
+
+        if botName == "joker":
+            words = msg.decode().split()
+            keyWork = words[len(words)-1]
+            if keyWork == "joker":
+                reply = "\n" + botName + ": {}".format(bot(keyWork, sender))
+                print(reply)
 
 print("Client has been disconnected from the server")
 client.close()

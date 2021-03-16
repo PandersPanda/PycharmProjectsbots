@@ -5,12 +5,12 @@ import string
 
 # bots
 
-botList = ["joker", "batman", "luffy", "gon", "mario"]
+botList = ["joker", "batman", "luffy", "gon", "mario", "link"]
 
 actvities = ["chill", "play", "eat", "sleep", "run", "fight", "kill"]
 
 
-def joker(a=None):
+def joker(a, b=None):
     myDict = {
         "name": "Joker",
         "greet": "I am joker, batman's worst nightmare",
@@ -27,10 +27,14 @@ def joker(a=None):
     if a in myDict:
         return myDict[a]
 
+    if b is not None:
+        if b.lower() == "batman" and a == "joker":
+            return "Batman, let me tell you a joke about parenting, never mind you would not get it"
+
     return "There are other, more important things on my mind, hehehe"
 
 
-def batman(a=None):
+def batman(a, b=None):
     myDict = {
         "greet": "I am batman (In a very deep voice)",
         "hello": "I am batman (In a very deep voice)",
@@ -50,7 +54,7 @@ def batman(a=None):
     return "Maybe later, as a superhero I don't have much time on my hands"
 
 
-def luffy(a=None):
+def luffy(a, b=None):
     myDict = {
         "greet": "I am Luffy, and I am going to be the greatest pyBot king!",
         "run": "Boooooring!",
@@ -70,7 +74,7 @@ def luffy(a=None):
     return "Sorry, i'd rather {}".format(random.choice(actvities))
 
 
-def gon(a=None):
+def gon(a, b=None):
     myDict = {
         "greet": "I am Gon and one day I will finally find my dad. Can he possibly be here, in the chatroom?",
         "run": "Come on, what are you waiting for!",
@@ -89,7 +93,7 @@ def gon(a=None):
     return "Hmm, to {} sounds fun!".format(a)
 
 
-def mario(a=None):
+def mario(a, b=None):
     responses = {
         "run": "yahoo!",
         "greet": "It's a mi Mario!",
@@ -107,7 +111,7 @@ def mario(a=None):
     return "Let's a GO!"
 
 
-def link(a=None):
+def link(a, b=None):
     responses = ["Hayyya", "Yaaahaha", "AAAAhhhh", "Hiiiiya"]
 
     return "{}".format(random.choice(responses))

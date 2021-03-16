@@ -24,17 +24,17 @@ except:
 sock.listen(20)
 botsConnected = []  # clients which are always bots
 botNames = []
-antallBots = 0
-ThreadCount = 0
 Username = "Host"  # This can be changes to your liking
 
-lines = ["My dear bots, today I would like to", "Make a great suggestion for the bots"]
+openingLines = ["My dear bots, today I would like to", "Make a great suggestion for the bots", "What wonders will you "
+               "make the bots do?"]
 activities = ["sing", "fight", "kill", "sleep", "chill", "run", "eat", "work", "greet", "joke"]
 
 
 def multi_threaded_client(connection):
-    while True:
-        print("\n" + Username + ": " + random.choice(lines) + ": ")
+    connected = True
+    while connected:
+        print("\n" + Username + ": " + random.choice(openingLines) + ": ")
         msg = input()
 
         if msg.lower() == "-help":
@@ -67,15 +67,15 @@ def multi_threaded_client(connection):
                 botKicked = parsed[1]
             else:
                 print("The format of the kick-command is kick BOTNAME")
-                print("\n" + Username + ": " + random.choice(lines) + ": ")
                 continue
 
             if botKicked.lower() in botNames:
+
                 index = botNames.index(botKicked.lower())
                 bot = botsConnected[index]
+                bot.send("disconnect123".encode())
                 remove(bot)
 
-                print("Bot: " + botKicked + " kicked")
                 continue
             else:
                 print("Bot: " + botKicked + " is not in the among the connected bots")
@@ -91,7 +91,7 @@ def multi_threaded_client(connection):
                 bot.send("Host".encode())
                 bot.send(msg.encode())
             except:
-                bot.close()
+                remove(bot)
 
             try:
                 data = bot.recv(2048)
@@ -99,16 +99,14 @@ def multi_threaded_client(connection):
                 time.sleep(0.5)
                 print("\n" + data.decode())
             except:
-                remove(bot)
-                print("\nBot has been disconnected, number of bots is now " + str(len(botsConnected)))
+                break
 
     connection.close()
 
 
 def remove(connection):
     if connection in botsConnected:
-        connection.close()
-
+        print("\nBot has been disconnected, number of bots is now " + str(len(botsConnected)))
         index = botsConnected.index(connection)
         del botNames[index]
         botsConnected.remove(connection)
@@ -116,12 +114,15 @@ def remove(connection):
 
 def brodcast(client, msg):
     for bot in botsConnected:
-        if bot != client:
-            bot.send(msg)
-
+        try:
+            if bot != client:
+                bot.send(msg)
+        except:
+            bot.close()
+            remove(bot)
 
 print("/// Welcome to the bot house, the program will start when at least 1 bot is connected ///")
-print("/// The bots are: Mario, Gon, Batman, Luffy and Joker ///\n")
+print("/// The bots are: Mario, Gon, Batman, Luffy, Joker and Link ///\n")
 
 while True:
     clientSocket, addr = sock.accept()
