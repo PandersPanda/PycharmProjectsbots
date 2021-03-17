@@ -96,10 +96,10 @@ def multi_threaded_client(connection):
                 remove(bot)
 
             try:
-                data = bot.recv(2048)
-                brodcast(bot, data)
+                reply = bot.recv(2048)
+                brodcast(bot, reply)
                 time.sleep(0.5)
-                print("\n" + data.decode())
+                print("\n" + reply.decode())
             except:
                 break
 

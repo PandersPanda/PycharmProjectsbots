@@ -10,7 +10,8 @@ actvities = ["chill", "play", "eat", "sleep", "run", "fight", "kill"]
 
 def joker(a, b=None):
     myDict = {
-        "name": "Joker",
+        "hey": "Hi, I am Joker, Batman's worst nightmare",
+        "hello": "Hi, I am Joker, Batman's worst nightmare",
         "greet": "I am joker, batman's worst nightmare",
         "run": "Physical labour is not my cup of tea",
         "sleep": "Sleeping is for the weak",
@@ -34,8 +35,9 @@ def joker(a, b=None):
 
 def batman(a=None):
     myDict = {
+        "hey": "hello, I am batman (In a very deep voice)",
         "greet": "I am batman (In a very deep voice)",
-        "hello": "I am batman (In a very deep voice)",
+        "hello": "hello, I am batman (In a very deep voice)",
         "run": "Yes, I need to be in shape",
         "sleep": "Sleeping is not a priority here",
         "kill": "I would never kill",
@@ -54,6 +56,8 @@ def batman(a=None):
 
 def luffy(a=None):
     myDict = {
+        "hello": "Heello! I am Luffy, and I am going to be the greatest pyBot king!",
+        "hey": "Heello! I am Luffy, and I am going to be the greatest pyBot king!",
         "greet": "I am Luffy, and I am going to be the greatest pyBot king!",
         "run": "Boooooring!",
         "sleep": "ZZZZzzzzz (He is doing it already)",
@@ -96,6 +100,8 @@ def gon(a=None):
 def mario(a=None):
     responses = {
         "run": "yahoo!",
+        "hey": "Hi, it's a mi Mario!",
+        "hello": "Hi, it's a mi Mario!",
         "greet": "It's a mi Mario!",
         "sleep": "*sleeps* (Meanwhile Peach gets kidnapped again)",
         "kill": "Oh yeah! (Mario jumps high up in the air)",
