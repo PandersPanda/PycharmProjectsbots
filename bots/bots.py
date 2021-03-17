@@ -1,7 +1,5 @@
-import socket
-import sys
+
 import random
-import string
 
 # bots
 
@@ -34,7 +32,7 @@ def joker(a, b=None):
     return "There are other, more important things on my mind, hehehe"
 
 
-def batman(a, b=None):
+def batman(a=None):
     myDict = {
         "greet": "I am batman (In a very deep voice)",
         "hello": "I am batman (In a very deep voice)",
@@ -54,7 +52,7 @@ def batman(a, b=None):
     return "Maybe later, as a superhero I don't have much time on my hands"
 
 
-def luffy(a, b=None):
+def luffy(a=None):
     myDict = {
         "greet": "I am Luffy, and I am going to be the greatest pyBot king!",
         "run": "Boooooring!",
@@ -74,9 +72,11 @@ def luffy(a, b=None):
     return "Sorry, i'd rather {}".format(random.choice(actvities))
 
 
-def gon(a, b=None):
+def gon(a=None):
     myDict = {
-        "greet": "I am Gon and one day I will finally find my dad. Can he possibly be here, in the chatroom?",
+        "hello": "I am Gon and one day I will finally find my dad. Could he possibly be here, in the chatroom?",
+        "hey": "I am Gon and one day I will finally find my dad. Could he possibly be here, in the chatroom?",
+        "greet": "I am Gon and one day I will finally find my dad. Could he possibly be here, in the chatroom?",
         "run": "Come on, what are you waiting for!",
         "sleep": "I will practice my nen while I sleep",
         "kill": "No, id rather not",
@@ -90,10 +90,10 @@ def gon(a, b=None):
     if a in myDict:
         return myDict[a]
 
-    return "Hmm, to {} sounds fun!".format(a)
+    return "Hmm, that sounds fun!"
 
 
-def mario(a, b=None):
+def mario(a=None):
     responses = {
         "run": "yahoo!",
         "greet": "It's a mi Mario!",
@@ -111,7 +111,7 @@ def mario(a, b=None):
     return "Let's a GO!"
 
 
-def link(a, b=None):
+def link(a=None):
     responses = ["Hayyya", "Yaaahaha", "AAAAhhhh", "Hiiiiya"]
 
     return "{}".format(random.choice(responses))

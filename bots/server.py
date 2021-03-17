@@ -12,22 +12,22 @@ if len(sys.argv) == 2:
     port = int(sys.argv[1])
     print(str(port))
 else:
-    print("Not enough arguments, need the port as the parameter")
-    exit()
+    print("Write the port as an argument for example: 4242")
+    sys.exit()
 
 try:
     sock.bind(("localhost", port))
 except:
     print("Could not start the server")
-    exit()
+    sys.exit()
 
 sock.listen(20)
 botsConnected = []  # clients which are always bots
 botNames = []
-Username = "Host"  # This can be changes to your liking
+Username = input("Write your username: ")  # This can be changes to your liking
 
 openingLines = ["My dear bots, today I would like to", "Make a great suggestion for the bots", "What wonders will you "
-               "make the bots do?"]
+                                                                                               "make the bots do?"]
 activities = ["sing", "fight", "kill", "sleep", "chill", "run", "eat", "work", "greet", "joke"]
 
 
@@ -48,6 +48,8 @@ def multi_threaded_client(connection):
 
         if msg.lower() == "close":
             print("Closing server")
+            for bot in botsConnected:
+                bot.send("disconnect123".encode())
             os._exit(1)
 
         if msg.lower() == "random":
@@ -106,10 +108,10 @@ def multi_threaded_client(connection):
 
 def remove(connection):
     if connection in botsConnected:
-        print("\nBot has been disconnected, number of bots is now " + str(len(botsConnected)))
         index = botsConnected.index(connection)
         del botNames[index]
         botsConnected.remove(connection)
+        print("\nBot has been disconnected, number of bots is now " + str(len(botsConnected)))
 
 
 def brodcast(client, msg):
@@ -120,6 +122,7 @@ def brodcast(client, msg):
         except:
             bot.close()
             remove(bot)
+
 
 print("/// Welcome to the bot house, the program will start when at least 1 bot is connected ///")
 print("/// The bots are: Mario, Gon, Batman, Luffy, Joker and Link ///\n")
@@ -137,5 +140,3 @@ while True:
     print("For more information type -help in the input")
 
     _thread.start_new_thread(multi_threaded_client, (clientSocket,))
-
-sock.close()

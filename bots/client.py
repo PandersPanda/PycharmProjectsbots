@@ -1,7 +1,5 @@
 import socket
 import sys
-import random
-import string
 from bots import *
 
 # bots
@@ -16,10 +14,10 @@ if len(sys.argv) == 4:
         bot = eval(botName.lower())
     else:
         print("Bot is not in the current botlist")
-        exit()
+        sys.exit()
 else:
-    print("Not enough arguments")
-    exit()
+    print("Parameters needs to be: IP-address port botname")
+    sys.exit()
 
 # Connecting
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,7 +28,7 @@ try:
     client.send(botName.encode())
 except:
     print("Could not connect to the server, try again")
-    exit()
+    sys.exit()
 
 print(botName + " connected to the server \nawaiting message...")
 
